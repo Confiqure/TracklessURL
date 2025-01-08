@@ -110,15 +110,19 @@ def clean_url(url):
 # Main loop to monitor clipboard and clean URLs
 def main():
     last_clipboard = ""
+    last_cleaned_url = ""
     while True:
         clipboard_content = pyperclip.paste()
 
-        if clipboard_content != last_clipboard and clipboard_content.startswith(
-            ("http://", "https://")
+        if (
+            clipboard_content != last_clipboard
+            and clipboard_content != last_cleaned_url
+            and clipboard_content.startswith(("http://", "https://"))
         ):
             cleaned_url = clean_url(clipboard_content)
 
             if cleaned_url != clipboard_content:
+                last_cleaned_url = cleaned_url
                 pyperclip.copy(cleaned_url)
                 print(f"Cleaned URL: {cleaned_url}")
 
