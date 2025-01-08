@@ -89,10 +89,18 @@ def clean_url(url):
         cleaned_url = urlunparse(parsed_url._replace(query=new_query))
 
         if cleaned_url == url:
-            print(f"No tracking parameters found for {domain}")
-            print("Available query parameters:")
-            for param in query_params:
-                print(f"- {param}")
+            print(f"URL unchanged for: {domain}")
+            if query_params:
+                print("Query parameters:")
+                for param in query_params:
+                    print(f"- {param}")
+        else:
+            print(f"Cleaned URL for: {domain}")
+            if query_params:
+                print("Removed query parameters:")
+                for param in query_params:
+                    if param not in clean_params:
+                        print(f"- {param}")
 
         return cleaned_url
 
