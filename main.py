@@ -101,6 +101,10 @@ def clean_url(url):
                 for param in query_params:
                     if param not in clean_params:
                         print(f"- {param}")
+                if clean_params:
+                    print("Remaining query parameters:")
+                    for param in clean_params:
+                        print(f"- {param}")
 
         return cleaned_url
 
