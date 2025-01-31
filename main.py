@@ -123,10 +123,11 @@ def main():
             clipboard_content != last_clipboard
             and clipboard_content != last_cleaned_content
         ):
-            lines = clipboard_content.strip().splitlines()
+            lines = clipboard_content.splitlines()
             cleaned_lines = []
 
             for line in lines:
+                original_line = line
                 line = line.strip()
                 if line.startswith(("http://", "https://")):
                     cleaned_line = clean_url(line)
@@ -134,7 +135,7 @@ def main():
                     if cleaned_line != line:
                         print(f"Cleaned URL: {cleaned_line}")
                 else:
-                    cleaned_lines.append(line)
+                    cleaned_lines.append(original_line)
 
             final_content = "\n".join(cleaned_lines)
 
