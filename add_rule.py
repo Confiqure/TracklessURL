@@ -6,12 +6,16 @@ import sys
 def add_rule(domain, param):
     conn = sqlite3.connect("tracking_params.db")
     cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO tracking_rules (domain, param) VALUES (?, ?)", (domain, param)
-    )
-    conn.commit()
-    conn.close()
-    print(f"Rule added: Domain='{domain}', Parameter='{param}'")
+    try:
+        cursor.execute(
+            "INSERT INTO tracking_rules (domain, param) VALUES (?, ?)", (domain, param)
+        )
+        conn.commit()
+        print(f"Rule added: Domain='{domain}', Parameter='{param}'")
+    except sqlite3.IntegrityError:
+        print(f"Rule already exists: Domain='{domain}', Parameter='{param}'")
+    finally:
+        conn.close()
 
 
 if __name__ == "__main__":

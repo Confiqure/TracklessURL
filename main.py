@@ -21,6 +21,13 @@ def init_db():
     """
     )
 
+    cursor.execute(
+        """
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_tracking_rules_identity
+        ON tracking_rules (domain, param)
+    """
+    )
+
     conn.commit()
     conn.close()
 
